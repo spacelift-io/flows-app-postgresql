@@ -1,0 +1,1080 @@
+{
+  "name": "PostgreSQL Scenario",
+  "blocks": [
+    {
+      "id": "appEntity_0",
+      "nameComponent": {
+        "name": "Create Table",
+        "description": "Creates the papayas table with id and size columns"
+      },
+      "positionComponent": {
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "appEntityComponent": {
+        "appInstallationId": "01987fa1-3178-7e3d-9982-e0ff2df79af8",
+        "blockKey": "executeCommand",
+        "schema": {
+          "order": 1,
+          "name": "Execute Command",
+          "category": "Basic",
+          "description": "Executes INSERT, UPDATE, DELETE, or DDL commands (use Execute Query for RETURNING clauses)",
+          "config": {},
+          "hasOnInternalMessage": false,
+          "inputs": {
+            "default": {
+              "order": 0,
+              "config": {
+                "command": {
+                  "order": 0,
+                  "name": "SQL Command",
+                  "description": "SQL command to execute with optional parameter placeholders ($1, $2, etc.)",
+                  "type": {
+                    "type": "string"
+                  },
+                  "fixed": false,
+                  "required": true,
+                  "hasValidator": false,
+                  "fieldKey": "",
+                  "sensitive": false
+                },
+                "parameters": {
+                  "order": 1,
+                  "name": "Parameters",
+                  "description": "Array of parameter values for the command",
+                  "type": {
+                    "items": {},
+                    "type": "array"
+                  },
+                  "fixed": false,
+                  "required": false,
+                  "hasValidator": false,
+                  "fieldKey": "",
+                  "sensitive": false
+                }
+              },
+              "hasOnEvent": true
+            }
+          },
+          "outputs": {
+            "default": {
+              "order": 0,
+              "name": "Command Result",
+              "description": "The result of the SQL command execution",
+              "default": true,
+              "possiblePrimaryParents": [
+                "default"
+              ],
+              "type": {
+                "properties": {
+                  "rowsAffected": {
+                    "description": "Number of rows affected by the command",
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "rowsAffected"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "signals": {},
+          "hasOnSync": false,
+          "hasOnDrain": false,
+          "hasOnTimer": false
+        },
+        "configExprs": {}
+      },
+      "eventProcessingComponent": {
+        "active": true,
+        "outputs": [
+          {
+            "outputKey": "default",
+            "outputCustomizationExpr": null
+          }
+        ],
+        "appBlock": {
+          "inputs": [
+            {
+              "inputKey": "default",
+              "configExprs": {
+                "command": {
+                  "code": "'CREATE TABLE IF NOT EXISTS papayas (id SERIAL PRIMARY KEY, size VARCHAR(50))'"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "appEntity_1",
+      "nameComponent": {
+        "name": "Insert Single Row",
+        "description": "Inserts one row into the papayas table"
+      },
+      "positionComponent": {
+        "position": {
+          "x": 0,
+          "y": 150
+        }
+      },
+      "appEntityComponent": {
+        "appInstallationId": "01987fa1-3178-7e3d-9982-e0ff2df79af8",
+        "blockKey": "executeCommand",
+        "schema": {
+          "order": 1,
+          "name": "Execute Command",
+          "category": "Basic",
+          "description": "Executes INSERT, UPDATE, DELETE, or DDL commands (use Execute Query for RETURNING clauses)",
+          "config": {},
+          "hasOnInternalMessage": false,
+          "inputs": {
+            "default": {
+              "order": 0,
+              "config": {
+                "command": {
+                  "order": 0,
+                  "name": "SQL Command",
+                  "description": "SQL command to execute with optional parameter placeholders ($1, $2, etc.)",
+                  "type": {
+                    "type": "string"
+                  },
+                  "fixed": false,
+                  "required": true,
+                  "hasValidator": false,
+                  "fieldKey": "",
+                  "sensitive": false
+                },
+                "parameters": {
+                  "order": 1,
+                  "name": "Parameters",
+                  "description": "Array of parameter values for the command",
+                  "type": {
+                    "items": {},
+                    "type": "array"
+                  },
+                  "fixed": false,
+                  "required": false,
+                  "hasValidator": false,
+                  "fieldKey": "",
+                  "sensitive": false
+                }
+              },
+              "hasOnEvent": true
+            }
+          },
+          "outputs": {
+            "default": {
+              "order": 0,
+              "name": "Command Result",
+              "description": "The result of the SQL command execution",
+              "default": true,
+              "possiblePrimaryParents": [
+                "default"
+              ],
+              "type": {
+                "properties": {
+                  "rowsAffected": {
+                    "description": "Number of rows affected by the command",
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "rowsAffected"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "signals": {},
+          "hasOnSync": false,
+          "hasOnDrain": false,
+          "hasOnTimer": false
+        },
+        "configExprs": {}
+      },
+      "eventProcessingComponent": {
+        "active": true,
+        "outputs": [
+          {
+            "outputKey": "default",
+            "outputCustomizationExpr": null
+          }
+        ],
+        "appBlock": {
+          "inputs": [
+            {
+              "inputKey": "default",
+              "configExprs": {
+                "command": {
+                  "code": "'INSERT INTO papayas (size) VALUES ($1)'"
+                },
+                "parameters": {
+                  "code": "['medium']"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "appEntity_2",
+      "nameComponent": {
+        "name": "Bulk Insert Rows",
+        "description": "Bulk inserts 3 rows into the papayas table"
+      },
+      "positionComponent": {
+        "position": {
+          "x": 0,
+          "y": 300
+        }
+      },
+      "appEntityComponent": {
+        "appInstallationId": "01987fa1-3178-7e3d-9982-e0ff2df79af8",
+        "blockKey": "bulkInsert",
+        "schema": {
+          "order": 2,
+          "name": "Bulk Insert",
+          "category": "Bulk Operations",
+          "description": "Efficiently inserts multiple rows using PostgreSQL's COPY protocol",
+          "config": {},
+          "hasOnInternalMessage": false,
+          "inputs": {
+            "default": {
+              "order": 0,
+              "config": {
+                "columns": {
+                  "order": 1,
+                  "name": "Column Names",
+                  "description": "Array of column names to insert into",
+                  "type": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "fixed": false,
+                  "required": true,
+                  "hasValidator": false,
+                  "fieldKey": "",
+                  "sensitive": false
+                },
+                "rows": {
+                  "order": 2,
+                  "name": "Rows Data",
+                  "description": "Array of row data arrays (each inner array must match columns order)",
+                  "type": {
+                    "items": {
+                      "items": {},
+                      "type": "array"
+                    },
+                    "type": "array"
+                  },
+                  "fixed": false,
+                  "required": true,
+                  "hasValidator": false,
+                  "fieldKey": "",
+                  "sensitive": false
+                },
+                "table": {
+                  "order": 0,
+                  "name": "Table Name",
+                  "description": "Target table name (optionally with schema, e.g., 'public.users')",
+                  "type": {
+                    "type": "string"
+                  },
+                  "fixed": false,
+                  "required": true,
+                  "hasValidator": false,
+                  "fieldKey": "",
+                  "sensitive": false
+                }
+              },
+              "hasOnEvent": true
+            }
+          },
+          "outputs": {
+            "default": {
+              "order": 0,
+              "name": "Insert Result",
+              "description": "The result of the bulk insert operation",
+              "default": true,
+              "possiblePrimaryParents": [
+                "default"
+              ],
+              "type": {
+                "properties": {
+                  "rowCount": {
+                    "description": "Number of rows inserted",
+                    "type": "number"
+                  },
+                  "table": {
+                    "description": "The table name where rows were inserted",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "rowCount",
+                  "table"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "signals": {},
+          "hasOnSync": false,
+          "hasOnDrain": false,
+          "hasOnTimer": false
+        },
+        "configExprs": {}
+      },
+      "eventProcessingComponent": {
+        "active": true,
+        "outputs": [
+          {
+            "outputKey": "default",
+            "outputCustomizationExpr": null
+          }
+        ],
+        "appBlock": {
+          "inputs": [
+            {
+              "inputKey": "default",
+              "configExprs": {
+                "columns": {
+                  "code": "['id', 'size']"
+                },
+                "rows": {
+                  "code": "[[2, 'large'], [3, 'small'], [4, 'extra-large']]"
+                },
+                "table": {
+                  "code": "'papayas'"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "appEntity_3",
+      "nameComponent": {
+        "name": "Query Table",
+        "description": "Queries all rows from the papayas table"
+      },
+      "positionComponent": {
+        "position": {
+          "x": 0,
+          "y": 451
+        }
+      },
+      "appEntityComponent": {
+        "appInstallationId": "01987fa1-3178-7e3d-9982-e0ff2df79af8",
+        "blockKey": "executeQuery",
+        "schema": {
+          "order": 0,
+          "name": "Execute Query",
+          "category": "Basic",
+          "description": "Executes a SELECT query and returns the results",
+          "config": {},
+          "hasOnInternalMessage": false,
+          "inputs": {
+            "default": {
+              "order": 0,
+              "config": {
+                "parameters": {
+                  "order": 1,
+                  "name": "Parameters",
+                  "description": "Array of parameter values for the query",
+                  "type": {
+                    "items": {},
+                    "type": "array"
+                  },
+                  "fixed": false,
+                  "required": false,
+                  "hasValidator": false,
+                  "fieldKey": "",
+                  "sensitive": false
+                },
+                "query": {
+                  "order": 0,
+                  "name": "SQL Query",
+                  "description": "SQL SELECT query with optional parameter placeholders ($1, $2, etc.)",
+                  "type": {
+                    "type": "string"
+                  },
+                  "fixed": false,
+                  "required": true,
+                  "hasValidator": false,
+                  "fieldKey": "",
+                  "sensitive": false
+                }
+              },
+              "hasOnEvent": true
+            }
+          },
+          "outputs": {
+            "default": {
+              "order": 0,
+              "name": "Query Result",
+              "description": "The result of the SELECT query",
+              "default": true,
+              "possiblePrimaryParents": [
+                "default"
+              ],
+              "type": {
+                "properties": {
+                  "rows": {
+                    "description": "Array of result rows",
+                    "items": {
+                      "type": "object"
+                    },
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "rows"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "signals": {},
+          "hasOnSync": false,
+          "hasOnDrain": false,
+          "hasOnTimer": false
+        },
+        "configExprs": {}
+      },
+      "eventProcessingComponent": {
+        "active": true,
+        "outputs": [
+          {
+            "outputKey": "default",
+            "outputCustomizationExpr": null
+          }
+        ],
+        "appBlock": {
+          "inputs": [
+            {
+              "inputKey": "default",
+              "configExprs": {
+                "query": {
+                  "code": "'SELECT * FROM papayas ORDER BY id'"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "appEntity_4",
+      "nameComponent": {
+        "name": "Drop Table",
+        "description": "Drops the papayas table after queries complete"
+      },
+      "positionComponent": {
+        "position": {
+          "x": 0,
+          "y": 718
+        }
+      },
+      "appEntityComponent": {
+        "appInstallationId": "01987fa1-3178-7e3d-9982-e0ff2df79af8",
+        "blockKey": "executeCommand",
+        "schema": {
+          "order": 1,
+          "name": "Execute Command",
+          "category": "Basic",
+          "description": "Executes INSERT, UPDATE, DELETE, or DDL commands (use Execute Query for RETURNING clauses)",
+          "config": {},
+          "hasOnInternalMessage": false,
+          "inputs": {
+            "default": {
+              "order": 0,
+              "config": {
+                "command": {
+                  "order": 0,
+                  "name": "SQL Command",
+                  "description": "SQL command to execute with optional parameter placeholders ($1, $2, etc.)",
+                  "type": {
+                    "type": "string"
+                  },
+                  "fixed": false,
+                  "required": true,
+                  "hasValidator": false,
+                  "fieldKey": "",
+                  "sensitive": false
+                },
+                "parameters": {
+                  "order": 1,
+                  "name": "Parameters",
+                  "description": "Array of parameter values for the command",
+                  "type": {
+                    "items": {},
+                    "type": "array"
+                  },
+                  "fixed": false,
+                  "required": false,
+                  "hasValidator": false,
+                  "fieldKey": "",
+                  "sensitive": false
+                }
+              },
+              "hasOnEvent": true
+            }
+          },
+          "outputs": {
+            "default": {
+              "order": 0,
+              "name": "Command Result",
+              "description": "The result of the SQL command execution",
+              "default": true,
+              "possiblePrimaryParents": [
+                "default"
+              ],
+              "type": {
+                "properties": {
+                  "rowsAffected": {
+                    "description": "Number of rows affected by the command",
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "rowsAffected"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "signals": {},
+          "hasOnSync": false,
+          "hasOnDrain": false,
+          "hasOnTimer": false
+        },
+        "configExprs": {}
+      },
+      "eventProcessingComponent": {
+        "active": true,
+        "outputs": [
+          {
+            "outputKey": "default",
+            "outputCustomizationExpr": null
+          }
+        ],
+        "appBlock": {
+          "inputs": [
+            {
+              "inputKey": "default",
+              "configExprs": {
+                "command": {
+                  "code": "'DROP TABLE papayas'"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "appEntity_5",
+      "nameComponent": {
+        "name": "Get Table Info"
+      },
+      "positionComponent": {
+        "position": {
+          "x": 0,
+          "y": 582
+        }
+      },
+      "appEntityComponent": {
+        "appInstallationId": "01987fa1-3178-7e3d-9982-e0ff2df79af8",
+        "blockKey": "getTableInfo",
+        "schema": {
+          "order": 4,
+          "name": "Get Table Info",
+          "category": "Utility",
+          "description": "Retrieves schema information about tables and columns",
+          "config": {},
+          "hasOnInternalMessage": false,
+          "inputs": {
+            "default": {
+              "order": 0,
+              "config": {
+                "schema": {
+                  "order": 0,
+                  "name": "Schema Name",
+                  "description": "Database schema name",
+                  "type": {
+                    "type": "string"
+                  },
+                  "fixed": false,
+                  "required": false,
+                  "hasValidator": false,
+                  "fieldKey": "",
+                  "sensitive": false
+                },
+                "table": {
+                  "order": 1,
+                  "name": "Table Name",
+                  "description": "Table name to get information about",
+                  "type": {
+                    "type": "string"
+                  },
+                  "fixed": false,
+                  "required": true,
+                  "hasValidator": false,
+                  "fieldKey": "",
+                  "sensitive": false
+                }
+              },
+              "hasOnEvent": true
+            }
+          },
+          "outputs": {
+            "default": {
+              "order": 0,
+              "name": "Table Information",
+              "description": "Complete schema information about the table",
+              "default": true,
+              "possiblePrimaryParents": [
+                "default"
+              ],
+              "type": {
+                "properties": {
+                  "columns": {
+                    "description": "Array of column definitions",
+                    "items": {
+                      "properties": {
+                        "comment": {
+                          "description": "Column comment/description",
+                          "type": "string"
+                        },
+                        "dataType": {
+                          "description": "PostgreSQL data type",
+                          "type": "string"
+                        },
+                        "defaultValue": {
+                          "description": "Default value expression",
+                          "type": "string"
+                        },
+                        "maxLength": {
+                          "description": "Maximum character length (for string types)",
+                          "type": "number"
+                        },
+                        "name": {
+                          "description": "Column name",
+                          "type": "string"
+                        },
+                        "nullable": {
+                          "description": "Whether the column allows NULL values",
+                          "type": "boolean"
+                        },
+                        "numericPrecision": {
+                          "description": "Numeric precision (for numeric types)",
+                          "type": "number"
+                        },
+                        "numericScale": {
+                          "description": "Numeric scale (for numeric types)",
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "constraints": {
+                    "description": "Array of table constraints",
+                    "items": {
+                      "properties": {
+                        "columns": {
+                          "description": "Columns involved in the constraint",
+                          "type": "string"
+                        },
+                        "foreignColumns": {
+                          "description": "Referenced columns (for foreign keys)",
+                          "type": "string"
+                        },
+                        "foreignTableName": {
+                          "description": "Referenced table name (for foreign keys)",
+                          "type": "string"
+                        },
+                        "foreignTableSchema": {
+                          "description": "Referenced table schema (for foreign keys)",
+                          "type": "string"
+                        },
+                        "name": {
+                          "description": "Constraint name",
+                          "type": "string"
+                        },
+                        "type": {
+                          "description": "Constraint type (PRIMARY KEY, FOREIGN KEY, UNIQUE, CHECK)",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "indexes": {
+                    "description": "Array of table indexes",
+                    "items": {
+                      "properties": {
+                        "columns": {
+                          "description": "Columns included in the index",
+                          "type": "string"
+                        },
+                        "isPrimary": {
+                          "description": "Whether this is the primary key index",
+                          "type": "boolean"
+                        },
+                        "isUnique": {
+                          "description": "Whether the index enforces uniqueness",
+                          "type": "boolean"
+                        },
+                        "name": {
+                          "description": "Index name",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "schema": {
+                    "description": "Schema name",
+                    "type": "string"
+                  },
+                  "tableComment": {
+                    "description": "Table comment/description",
+                    "type": "string"
+                  },
+                  "tableName": {
+                    "description": "Table name",
+                    "type": "string"
+                  },
+                  "tableType": {
+                    "description": "Table type (BASE TABLE, VIEW, etc.)",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "schema",
+                  "tableName",
+                  "tableType",
+                  "columns",
+                  "constraints",
+                  "indexes"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "signals": {},
+          "hasOnSync": false,
+          "hasOnDrain": false,
+          "hasOnTimer": false
+        },
+        "configExprs": {}
+      },
+      "eventProcessingComponent": {
+        "active": true,
+        "outputs": [
+          {
+            "outputKey": "default",
+            "outputCustomizationExpr": null
+          }
+        ],
+        "appBlock": {
+          "inputs": [
+            {
+              "inputKey": "default",
+              "configExprs": {
+                "table": {
+                  "code": "\"papayas\""
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "appEntity_6",
+      "nameComponent": {
+        "name": "Send Notification"
+      },
+      "positionComponent": {
+        "position": {
+          "x": 302,
+          "y": 150
+        }
+      },
+      "appEntityComponent": {
+        "appInstallationId": "01987fa1-3178-7e3d-9982-e0ff2df79af8",
+        "blockKey": "sendNotification",
+        "schema": {
+          "order": 3,
+          "name": "Send Notification",
+          "category": "Listen/Notify",
+          "description": "Sends a NOTIFY event to a PostgreSQL channel",
+          "config": {},
+          "hasOnInternalMessage": false,
+          "inputs": {
+            "default": {
+              "order": 0,
+              "config": {
+                "channel": {
+                  "order": 0,
+                  "name": "Channel Name",
+                  "description": "PostgreSQL channel name to send notification to",
+                  "type": {
+                    "type": "string"
+                  },
+                  "fixed": false,
+                  "required": true,
+                  "hasValidator": false,
+                  "fieldKey": "",
+                  "sensitive": false
+                },
+                "payload": {
+                  "order": 1,
+                  "name": "Payload",
+                  "description": "Notification payload (max 8000 bytes). Objects will be JSON stringified.",
+                  "type": {},
+                  "fixed": false,
+                  "required": false,
+                  "hasValidator": false,
+                  "fieldKey": "",
+                  "sensitive": false
+                }
+              },
+              "hasOnEvent": true
+            }
+          },
+          "outputs": {
+            "default": {
+              "order": 0,
+              "name": "Notification Sent",
+              "description": "Confirmation that the notification was sent",
+              "default": true,
+              "possiblePrimaryParents": [
+                "default"
+              ],
+              "type": {
+                "properties": {
+                  "channel": {
+                    "description": "The channel the notification was sent to",
+                    "type": "string"
+                  },
+                  "payload": {
+                    "description": "The payload that was sent"
+                  }
+                },
+                "required": [
+                  "channel"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "signals": {},
+          "hasOnSync": false,
+          "hasOnDrain": false,
+          "hasOnTimer": false
+        },
+        "configExprs": {}
+      },
+      "eventProcessingComponent": {
+        "active": true,
+        "outputs": [
+          {
+            "outputKey": "default",
+            "outputCustomizationExpr": null
+          }
+        ],
+        "appBlock": {
+          "inputs": [
+            {
+              "inputKey": "default",
+              "configExprs": {
+                "channel": {
+                  "code": "\"test-channel\""
+                },
+                "payload": {
+                  "code": "\"hello\""
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "appEntity_7",
+      "nameComponent": {
+        "name": "Send Notification"
+      },
+      "positionComponent": {
+        "position": {
+          "x": 302,
+          "y": 293
+        }
+      },
+      "appEntityComponent": {
+        "appInstallationId": "01987fa1-3178-7e3d-9982-e0ff2df79af8",
+        "blockKey": "sendNotification",
+        "schema": {
+          "order": 3,
+          "name": "Send Notification",
+          "category": "Listen/Notify",
+          "description": "Sends a NOTIFY event to a PostgreSQL channel",
+          "config": {},
+          "hasOnInternalMessage": false,
+          "inputs": {
+            "default": {
+              "order": 0,
+              "config": {
+                "channel": {
+                  "order": 0,
+                  "name": "Channel Name",
+                  "description": "PostgreSQL channel name to send notification to",
+                  "type": {
+                    "type": "string"
+                  },
+                  "fixed": false,
+                  "required": true,
+                  "hasValidator": false,
+                  "fieldKey": "",
+                  "sensitive": false
+                },
+                "payload": {
+                  "order": 1,
+                  "name": "Payload",
+                  "description": "Notification payload (max 8000 bytes). Objects will be JSON stringified.",
+                  "type": {},
+                  "fixed": false,
+                  "required": false,
+                  "hasValidator": false,
+                  "fieldKey": "",
+                  "sensitive": false
+                }
+              },
+              "hasOnEvent": true
+            }
+          },
+          "outputs": {
+            "default": {
+              "order": 0,
+              "name": "Notification Sent",
+              "description": "Confirmation that the notification was sent",
+              "default": true,
+              "possiblePrimaryParents": [
+                "default"
+              ],
+              "type": {
+                "properties": {
+                  "channel": {
+                    "description": "The channel the notification was sent to",
+                    "type": "string"
+                  },
+                  "payload": {
+                    "description": "The payload that was sent"
+                  }
+                },
+                "required": [
+                  "channel"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "signals": {},
+          "hasOnSync": false,
+          "hasOnDrain": false,
+          "hasOnTimer": false
+        },
+        "configExprs": {}
+      },
+      "eventProcessingComponent": {
+        "active": true,
+        "outputs": [
+          {
+            "outputKey": "default",
+            "outputCustomizationExpr": null
+          }
+        ],
+        "appBlock": {
+          "inputs": [
+            {
+              "inputKey": "default",
+              "configExprs": {
+                "channel": {
+                  "code": "\"test-channel\""
+                },
+                "payload": {
+                  "code": "{\n  hello: \"world\"  \n}"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "blockLinks": [
+    {
+      "fromEntityId": "appEntity_0",
+      "fromOutputKey": "default",
+      "toEntityId": "appEntity_1",
+      "toInputKey": "default"
+    },
+    {
+      "fromEntityId": "appEntity_1",
+      "fromOutputKey": "default",
+      "toEntityId": "appEntity_2",
+      "toInputKey": "default"
+    },
+    {
+      "fromEntityId": "appEntity_2",
+      "fromOutputKey": "default",
+      "toEntityId": "appEntity_3",
+      "toInputKey": "default"
+    },
+    {
+      "fromEntityId": "appEntity_3",
+      "fromOutputKey": "default",
+      "toEntityId": "appEntity_5",
+      "toInputKey": "default"
+    },
+    {
+      "fromEntityId": "appEntity_5",
+      "fromOutputKey": "default",
+      "toEntityId": "appEntity_4",
+      "toInputKey": "default"
+    },
+    {
+      "fromEntityId": "appEntity_6",
+      "fromOutputKey": "default",
+      "toEntityId": "appEntity_7",
+      "toInputKey": "default"
+    }
+  ],
+  "appInstallations": [
+    {
+      "id": "01987fa1-3178-7e3d-9982-e0ff2df79af8",
+      "name": "PostgreSQL",
+      "appId": "01987f8b-6f40-757e-a2c8-cf9070c70aa2",
+      "appName": "PostgreSQL",
+      "appVersion": "1.0.0"
+    }
+  ],
+  "notes": [],
+  "exportedFrom": "01987fa1-c450-7c58-8962-a84bd19e8235"
+}
