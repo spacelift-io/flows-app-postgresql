@@ -50,6 +50,7 @@ Default should not be implemented as the field being filled, but rather as a def
 ### Connection Validation
 
 The app will implement an `onSync` handler that:
+
 1. Tests the database connection using the provided credentials
 2. Validates that the user has necessary permissions
 3. Returns appropriate status (ready/failed) based on connection test
@@ -59,31 +60,37 @@ The app will implement an `onSync` handler that:
 ### Query Blocks
 
 #### 2.1 Execute Query
+
 **Name:** Execute Query  
 **Description:** Executes a SELECT query and returns the results
 
 **Input Config Fields:**
+
 - `query` (string, required): SQL SELECT query with optional parameter placeholders ($1, $2, etc.)
 - `parameters` (array, optional): Array of parameter values for the query
 
 **Entity Config Fields:** None
 
 **Outputs:**
+
 - `default`: Query results including rows array, rowCount, and fields metadata
 
 ---
 
 #### 2.2 Execute Command
+
 **Name:** Execute Command  
 **Description:** Executes INSERT, UPDATE, DELETE, or DDL commands
 
 **Input Config Fields:**
+
 - `command` (string, required): SQL command to execute
 - `parameters` (array, optional): Array of parameter values
 
 **Entity Config Fields:** None
 
 **Outputs:**
+
 - `default`: Command result including rowCount and optionally returned rows
 
 ---
@@ -91,10 +98,12 @@ The app will implement an `onSync` handler that:
 ### Bulk Operation Blocks
 
 #### 2.3 Bulk Insert
+
 **Name:** Bulk Insert  
 **Description:** Efficiently inserts multiple rows using PostgreSQL's COPY protocol
 
 **Input Config Fields:**
+
 - `table` (string, required): Target table name
 - `columns` (array, required): Array of column names
 - `rows` (array, required): Array of row data arrays
@@ -102,6 +111,7 @@ The app will implement an `onSync` handler that:
 **Entity Config Fields:** None
 
 **Outputs:**
+
 - `default`: Insert result with total rowCount
 
 ---
@@ -109,16 +119,19 @@ The app will implement an `onSync` handler that:
 ### PostgreSQL-Specific Blocks
 
 #### 2.4 Send Notification
+
 **Name:** Send Notification  
 **Description:** Sends a NOTIFY event to a PostgreSQL channel
 
 **Input Config Fields:**
+
 - `channel` (string, required): Channel name to notify
 - `payload` (any, optional): Notification payload (max 8000 bytes); if not a string, it will be serialized to JSON
 
 **Entity Config Fields:** None
 
 **Outputs:**
+
 - `default`: Confirmation that notification was sent
 
 ---
@@ -126,16 +139,19 @@ The app will implement an `onSync` handler that:
 ### Utility Blocks
 
 #### 2.5 Get Table Info
+
 **Name:** Get Table Info  
 **Description:** Retrieves schema information about tables and columns
 
 **Input Config Fields:**
+
 - `schema` (string, required): Schema name (default: "public")
 - `table` (string, required): Table name
 
 **Entity Config Fields:** None
 
 **Outputs:**
+
 - `default`: table definition with columns, types, constraints
 
 ---
@@ -144,7 +160,7 @@ The app will implement an `onSync` handler that:
 
 1. **SQL Injection Prevention**: All blocks MUST use parameterized queries. User input is never directly concatenated into SQL strings.
 
-2. **Connection Security**: 
+2. **Connection Security**:
    - Support SSL/TLS connections with configurable verification
    - Sensitive configuration fields marked appropriately
    - Connection credentials never logged
@@ -152,8 +168,9 @@ The app will implement an `onSync` handler that:
 ## Error Handling
 
 The app follows the established pattern of letting errors bubble up naturally. Specific PostgreSQL error types will be preserved:
+
 - Connection errors
-- Authentication failures  
+- Authentication failures
 - Query syntax errors
 - Constraint violations
 - Deadlocks and lock timeouts
