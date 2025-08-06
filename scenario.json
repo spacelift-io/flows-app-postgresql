@@ -4,8 +4,8 @@
     {
       "id": "appEntity_0",
       "nameComponent": {
-        "name": "Create Table",
-        "description": "Creates the papayas table with id and size columns"
+        "name": "Create Test Table",
+        "description": "Creates the test table with id, number_field, bool_field, jsonb_field, and text_field columns"
       },
       "positionComponent": {
         "position": {
@@ -102,7 +102,7 @@
               "inputKey": "default",
               "configExprs": {
                 "command": {
-                  "code": "'CREATE TABLE IF NOT EXISTS papayas (id SERIAL PRIMARY KEY, size VARCHAR(50))'"
+                  "code": "'CREATE TABLE IF NOT EXISTS test (id SERIAL PRIMARY KEY, number_field INTEGER, bool_field BOOLEAN, jsonb_field JSONB, text_field TEXT)'"
                 }
               }
             }
@@ -114,7 +114,7 @@
       "id": "appEntity_1",
       "nameComponent": {
         "name": "Insert Single Row",
-        "description": "Inserts one row into the papayas table"
+        "description": "Inserts one row into the test table"
       },
       "positionComponent": {
         "position": {
@@ -211,10 +211,10 @@
               "inputKey": "default",
               "configExprs": {
                 "command": {
-                  "code": "'INSERT INTO papayas (size) VALUES ($1)'"
+                  "code": "'INSERT INTO test (number_field, bool_field, jsonb_field, text_field) VALUES ($1, $2, $3, $4)'"
                 },
                 "parameters": {
-                  "code": "['medium']"
+                  "code": "[42, true, {key: 'value', nested: {number: 123}}, 'Hello World']"
                 }
               }
             }
@@ -226,7 +226,7 @@
       "id": "appEntity_2",
       "nameComponent": {
         "name": "Bulk Insert Rows",
-        "description": "Bulk inserts 3 rows into the papayas table"
+        "description": "Bulk inserts multiple rows into the test table"
       },
       "positionComponent": {
         "position": {
@@ -347,13 +347,13 @@
               "inputKey": "default",
               "configExprs": {
                 "columns": {
-                  "code": "['id', 'size']"
+                  "code": "['id', 'number_field', 'bool_field', 'jsonb_field', 'text_field']"
                 },
                 "rows": {
-                  "code": "[[2, 'large'], [3, 'small'], [4, 'extra-large']]"
+                  "code": "[[2, 100, false, {type: 'test', data: [1,2,3]}, 'Second row'], [3, 200, true, {active: true, settings: {theme: 'dark'}}, 'Third row'], [4, 300, false, {empty: null}, 'Fourth row']]"
                 },
                 "table": {
-                  "code": "'papayas'"
+                  "code": "'test'"
                 }
               }
             }
@@ -365,7 +365,7 @@
       "id": "appEntity_3",
       "nameComponent": {
         "name": "Query Table",
-        "description": "Queries all rows from the papayas table"
+        "description": "Queries all rows from the test table"
       },
       "positionComponent": {
         "position": {
@@ -465,7 +465,7 @@
               "inputKey": "default",
               "configExprs": {
                 "query": {
-                  "code": "'SELECT * FROM papayas ORDER BY id'"
+                  "code": "'SELECT * FROM test ORDER BY id'"
                 }
               }
             }
@@ -477,7 +477,7 @@
       "id": "appEntity_4",
       "nameComponent": {
         "name": "Drop Table",
-        "description": "Drops the papayas table after queries complete"
+        "description": "Drops the test table after queries complete"
       },
       "positionComponent": {
         "position": {
@@ -574,7 +574,7 @@
               "inputKey": "default",
               "configExprs": {
                 "command": {
-                  "code": "'DROP TABLE papayas'"
+                  "code": "'DROP TABLE test'"
                 }
               }
             }
@@ -585,7 +585,8 @@
     {
       "id": "appEntity_5",
       "nameComponent": {
-        "name": "Get Table Info"
+        "name": "Get Table Info",
+        "description": "Gets table information for the test table"
       },
       "positionComponent": {
         "position": {
@@ -797,7 +798,7 @@
               "inputKey": "default",
               "configExprs": {
                 "table": {
-                  "code": "\"papayas\""
+                  "code": "\"test\""
                 }
               }
             }

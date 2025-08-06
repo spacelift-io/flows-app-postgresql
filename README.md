@@ -22,14 +22,13 @@ The app requires PostgreSQL connection details:
 - `executeQuery`
   - Description: Executes SELECT queries and returns results as an array of row objects
   - Implementation: Raw API call using parameterized queries ($1, $2, etc.)
-  
 - `executeCommand`
   - Description: Executes INSERT, UPDATE, DELETE, or DDL commands. Returns number of rows affected.
   - Implementation: Raw API call. For RETURNING clauses, use executeQuery instead.
 
 - `bulkInsert`
-  - Description: Efficiently inserts multiple rows using parameterized batch insert
-  - Implementation: Builds a single INSERT statement with multiple value sets
+  - Description: Efficiently inserts multiple rows using PostgreSQL's COPY protocol for maximum performance
+  - Implementation: Uses COPY FROM STDIN with CSV format for streaming bulk data
 
 - `sendNotification`
   - Description: Sends a NOTIFY event to a PostgreSQL channel with optional payload (max 8000 bytes)
