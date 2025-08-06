@@ -1,7 +1,5 @@
 import { AppBlock, events } from "@slflows/sdk/v1";
-import { Pool } from "pg";
-import { getPoolConfig } from "../utils/poolConfig";
-import { from as copyFrom } from "pg-copy-streams";
+import { getPool } from "../utils/pool.ts";
 
 export const bulkInsert: AppBlock = {
   name: "Bulk Insert",
@@ -46,10 +44,11 @@ export const bulkInsert: AppBlock = {
       },
       async onEvent(input) {
         const { table, columns, rows } = input.event.inputConfig;
-        const pool = new Pool(getPoolConfig(input.app.config));
+        const pool = await getPool(input.app.config);
 
         const client = await pool.connect();
         try {
+          // Build the INSERT query with multiple value sets using parameterized queries
           const columnsList = (columns as string[])
             .map((col) => `"${col}"`)
             .join(", ");
@@ -63,69 +62,36 @@ export const bulkInsert: AppBlock = {
             return;
           }
 
-          // Use COPY protocol for efficient bulk insert
-          const copyQuery = `COPY ${table} (${columnsList}) FROM STDIN WITH (FORMAT csv, NULL '\\N')`;
-          const stream = copyFrom(copyQuery);
+          // Create placeholder sets for each row
+          const valuePlaceholders: string[] = [];
+          const flatValues: any[] = [];
+          let paramIndex = 1;
 
-          // Execute COPY query with stream
-          client.query(stream as any);
-
-          let rowCount = 0;
-
-          // Process and write all rows directly to the stream
           for (const row of rowsData) {
-            const csvRow = row
-              .map((value) => {
-                if (value === null || value === undefined) {
-                  return "\\N";
-                }
-                if (typeof value === "string") {
-                  // Escape quotes and wrap in quotes if needed
-                  if (
-                    value.includes(",") ||
-                    value.includes('"') ||
-                    value.includes("\n") ||
-                    value.includes("\r")
-                  ) {
-                    return `"${value.replace(/"/g, '""')}"`;
-                  }
-                  return value;
-                }
-                if (typeof value === "bigint") {
-                  return value.toString();
-                }
-                if (typeof value === "boolean") {
-                  return value ? "t" : "f";
-                }
-                if (value instanceof Date) {
-                  return value.toISOString();
-                }
-                if (typeof value === "object") {
-                  // For JSON/JSONB columns
-                  return JSON.stringify(value);
-                }
-                return String(value);
-              })
-              .join(",");
-
-            stream.write(csvRow + "\n");
-            rowCount++;
+            const rowPlaceholders: string[] = [];
+            for (const value of row) {
+              rowPlaceholders.push(`$${paramIndex}`);
+              // Handle BigInt values
+              if (typeof value === "bigint") {
+                flatValues.push(value.toString());
+              } else {
+                flatValues.push(value);
+              }
+              paramIndex++;
+            }
+            valuePlaceholders.push(`(${rowPlaceholders.join(", ")})`);
           }
 
-          // Wait for the COPY operation to complete
-          await new Promise<void>((resolve, reject) => {
-            stream.on("finish", resolve);
-            stream.on("error", reject);
-            stream.end();
-          });
+          const insertQuery = `INSERT INTO ${table} (${columnsList}) VALUES ${valuePlaceholders.join(", ")}`;
+
+          const result = await client.query(insertQuery, flatValues);
 
           await events.emit({
-            rowCount,
+            rowCount: result.rowCount || rowsData.length,
             table: table as string,
           });
         } finally {
           client.release();
-          await pool.end();
         }
       },
     },

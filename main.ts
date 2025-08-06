@@ -131,7 +131,6 @@ export const app = defineApp({
       await client.release();
       await pool.end();
 
-      console.log("Successfully connected to PostgreSQL database");
       return {
         newStatus: "ready" as const,
       };

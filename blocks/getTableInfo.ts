@@ -1,6 +1,5 @@
 import { AppBlock, events } from "@slflows/sdk/v1";
-import { Pool } from "pg";
-import { getPoolConfig } from "../utils/poolConfig";
+import { getPool } from "../utils/pool.ts";
 
 export const getTableInfo: AppBlock = {
   name: "Get Table Info",
@@ -27,7 +26,7 @@ export const getTableInfo: AppBlock = {
         const { schema: schemaName, table } = input.event.inputConfig;
         const actualSchema = schemaName || "public";
 
-        const pool = new Pool(getPoolConfig(input.app.config));
+        const pool = await getPool(input.app.config);
         const client = await pool.connect();
 
         try {
@@ -162,7 +161,6 @@ export const getTableInfo: AppBlock = {
           });
         } finally {
           client.release();
-          await pool.end();
         }
       },
     },

@@ -64,9 +64,7 @@
               "name": "Command Result",
               "description": "The result of the SQL command execution",
               "default": true,
-              "possiblePrimaryParents": [
-                "default"
-              ],
+              "possiblePrimaryParents": ["default"],
               "type": {
                 "properties": {
                   "rowsAffected": {
@@ -74,9 +72,7 @@
                     "type": "number"
                   }
                 },
-                "required": [
-                  "rowsAffected"
-                ],
+                "required": ["rowsAffected"],
                 "type": "object"
               }
             }
@@ -173,9 +169,7 @@
               "name": "Command Result",
               "description": "The result of the SQL command execution",
               "default": true,
-              "possiblePrimaryParents": [
-                "default"
-              ],
+              "possiblePrimaryParents": ["default"],
               "type": {
                 "properties": {
                   "rowsAffected": {
@@ -183,9 +177,7 @@
                     "type": "number"
                   }
                 },
-                "required": [
-                  "rowsAffected"
-                ],
+                "required": ["rowsAffected"],
                 "type": "object"
               }
             }
@@ -304,9 +296,7 @@
               "name": "Insert Result",
               "description": "The result of the bulk insert operation",
               "default": true,
-              "possiblePrimaryParents": [
-                "default"
-              ],
+              "possiblePrimaryParents": ["default"],
               "type": {
                 "properties": {
                   "rowCount": {
@@ -318,10 +308,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "rowCount",
-                  "table"
-                ],
+                "required": ["rowCount", "table"],
                 "type": "object"
               }
             }
@@ -424,9 +411,7 @@
               "name": "Query Result",
               "description": "The result of the SELECT query",
               "default": true,
-              "possiblePrimaryParents": [
-                "default"
-              ],
+              "possiblePrimaryParents": ["default"],
               "type": {
                 "properties": {
                   "rows": {
@@ -437,9 +422,7 @@
                     "type": "array"
                   }
                 },
-                "required": [
-                  "rows"
-                ],
+                "required": ["rows"],
                 "type": "object"
               }
             }
@@ -536,9 +519,7 @@
               "name": "Command Result",
               "description": "The result of the SQL command execution",
               "default": true,
-              "possiblePrimaryParents": [
-                "default"
-              ],
+              "possiblePrimaryParents": ["default"],
               "type": {
                 "properties": {
                   "rowsAffected": {
@@ -546,9 +527,7 @@
                     "type": "number"
                   }
                 },
-                "required": [
-                  "rowsAffected"
-                ],
+                "required": ["rowsAffected"],
                 "type": "object"
               }
             }
@@ -644,9 +623,7 @@
               "name": "Table Information",
               "description": "Complete schema information about the table",
               "default": true,
-              "possiblePrimaryParents": [
-                "default"
-              ],
+              "possiblePrimaryParents": ["default"],
               "type": {
                 "properties": {
                   "columns": {
@@ -865,9 +842,7 @@
               "name": "Notification Sent",
               "description": "Confirmation that the notification was sent",
               "default": true,
-              "possiblePrimaryParents": [
-                "default"
-              ],
+              "possiblePrimaryParents": ["default"],
               "type": {
                 "properties": {
                   "channel": {
@@ -878,9 +853,7 @@
                     "description": "The payload that was sent"
                   }
                 },
-                "required": [
-                  "channel"
-                ],
+                "required": ["channel"],
                 "type": "object"
               }
             }
@@ -976,9 +949,7 @@
               "name": "Notification Sent",
               "description": "Confirmation that the notification was sent",
               "default": true,
-              "possiblePrimaryParents": [
-                "default"
-              ],
+              "possiblePrimaryParents": ["default"],
               "type": {
                 "properties": {
                   "channel": {
@@ -989,9 +960,7 @@
                     "description": "The payload that was sent"
                   }
                 },
-                "required": [
-                  "channel"
-                ],
+                "required": ["channel"],
                 "type": "object"
               }
             }

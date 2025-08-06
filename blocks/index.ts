@@ -7,6 +7,7 @@
 import { executeQuery } from "./executeQuery";
 import { executeCommand } from "./executeCommand";
 import { bulkInsert } from "./bulkInsert";
+import { streamQuery } from "./streamQuery";
 import { sendNotification } from "./sendNotification";
 import { getTableInfo } from "./getTableInfo";
 
@@ -17,6 +18,7 @@ export const blocks = {
   executeQuery,
   executeCommand,
   bulkInsert,
+  streamQuery,
   sendNotification,
   getTableInfo,
 } as const;
@@ -26,6 +28,7 @@ export {
   executeQuery,
   executeCommand,
   bulkInsert,
+  streamQuery,
   sendNotification,
   getTableInfo,
 };

@@ -1,6 +1,5 @@
 import { AppBlock, events } from "@slflows/sdk/v1";
-import { Pool } from "pg";
-import { getPoolConfig } from "../utils/poolConfig";
+import { getPool } from "../utils/pool.ts";
 
 export const executeCommand: AppBlock = {
   name: "Execute Command",
@@ -30,7 +29,7 @@ export const executeCommand: AppBlock = {
       },
       async onEvent(input) {
         const { command, parameters } = input.event.inputConfig;
-        const pool = new Pool(getPoolConfig(input.app.config));
+        const pool = await getPool(input.app.config);
 
         const client = await pool.connect();
         try {
@@ -44,7 +43,6 @@ export const executeCommand: AppBlock = {
           });
         } finally {
           client.release();
-          await pool.end();
         }
       },
     },

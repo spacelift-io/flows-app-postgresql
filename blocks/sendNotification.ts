@@ -1,6 +1,5 @@
 import { AppBlock, events } from "@slflows/sdk/v1";
-import { Pool } from "pg";
-import { getPoolConfig } from "../utils/poolConfig";
+import { getPool } from "../utils/pool.ts";
 
 export const sendNotification: AppBlock = {
   name: "Send Notification",
@@ -26,7 +25,7 @@ export const sendNotification: AppBlock = {
       },
       async onEvent(input) {
         const { channel, payload } = input.event.inputConfig;
-        const pool = new Pool(getPoolConfig(input.app.config));
+        const pool = await getPool(input.app.config);
 
         const client = await pool.connect();
         try {
@@ -64,7 +63,6 @@ export const sendNotification: AppBlock = {
           });
         } finally {
           client.release();
-          await pool.end();
         }
       },
     },
